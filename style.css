@@ -1,0 +1,120 @@
+/* Wordly – styles (linked from index.html) */
+/* ---------- 1. THEME VARIABLES ----------
+   Colors live in CSS variables so JavaScript can switch
+   themes by changing ONE attribute (data-theme) on <html>. */
+:root {
+  --bg: #eef1f5;
+  --surface: #ffffff;
+  --text: #1b2433;
+  --muted: #5b6678;
+  --accent: #1f3a8a;        /* deep blue: buttons, links */
+  --accent-text: #ffffff;
+  --saved: #ffd95a;         /* marigold: highlights saved words */
+  --saved-text: #1b2433;
+  --border: #d3d9e3;
+  --error-bg: #fdeaea;
+  --error-text: #8a1c1c;
+}
+:root[data-theme="dark"] {
+  --bg: #11161f;
+  --surface: #1b2230;
+  --text: #e8ecf3;
+  --muted: #9aa5b8;
+  --accent: #8fb0ff;
+  --accent-text: #11161f;
+  --border: #2e384a;
+  --error-bg: #3a1c1f;
+  --error-text: #ffb4b4;
+}
+
+/* ---------- 2. BASE LAYOUT ---------- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s; /* smooth theme change */
+}
+.app { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+h1 { font-family: Georgia, "Times New Roman", serif; font-size: 2.2rem; margin: 0; }
+h2 { margin: 0 0 8px; font-size: 1.1rem; }
+
+/* ---------- 3. SEARCH BAR (#search-form) ---------- */
+#search-form { display: flex; gap: 8px; margin-bottom: 8px; }
+#search-input {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+#search-input:focus { outline: none; border-color: var(--accent); }
+
+/* Shared button style with hover + press effects */
+button {
+  font: inherit;
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 2px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+  transition: transform 0.15s, opacity 0.15s;
+}
+button:hover { transform: translateY(-2px); opacity: 0.9; }
+button:active { transform: translateY(0); }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--saved); outline-offset: 2px; }
+button.ghost { background: transparent; color: var(--accent); }
+
+/* ---------- 4. RESULTS SECTION (#results) ---------- */
+#results { margin-top: 24px; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+  animation: fadeIn 0.35s ease;     /* animation when results appear */
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .card { animation: none; } button { transition: none; } }
+
+.word-title { font-family: Georgia, serif; font-size: 2rem; margin: 0; }
+.phonetic { color: var(--muted); margin-right: 8px; }
+.pos { font-style: italic; color: var(--accent); font-weight: 600; margin: 16px 0 4px; }
+.example { color: var(--muted); font-style: italic; margin: 2px 0 8px; }
+ol { padding-left: 22px; margin: 0; }
+.source a { color: var(--accent); word-break: break-all; }
+
+/* Synonyms are buttons so keyboard users can use them too */
+.synonyms { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip {
+  padding: 2px 10px;
+  font-size: 0.9rem;
+  background: transparent;
+  color: var(--accent);
+  border-width: 1px;
+}
+.chip:hover { background: var(--accent); color: var(--accent-text); }
+
+/* ---------- 5. DYNAMIC STYLING: saved words ----------
+   JS adds the .is-saved class to highlight saved words. */
+.is-saved { background: var(--saved); color: var(--saved-text); border-color: var(--saved); }
+#saved-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
+
+/* ---------- 6. MESSAGES ---------- */
+.message { padding: 14px 16px; border-radius: 8px; background: var(--surface); border: 1px solid var(--border); }
+.message.error { background: var(--error-bg); color: var(--error-text); border-color: var(--error-text); }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.hidden { display: none; }

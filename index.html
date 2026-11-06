@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordly – Dictionary</title>
+
+     <!-- External stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app">
+    <header>
+      <h1>Wordly Dictionary</h1>
+      <!-- aria-pressed tells screen readers whether dark mode is on -->
+      <button id="theme-toggle" class="ghost" aria-pressed="false" aria-label="Toggle dark theme">Dark mode</button>
+    </header>
+ 
+    <main>
+      <!-- Search form: submitting is handled by a JS event listener -->
+      <form id="search-form" role="search" aria-label="Dictionary search">
+        <label for="search-input" class="hidden">Word to look up</label>
+        <input id="search-input" type="text" placeholder="Type a word, e.g. serendipity"
+               autocomplete="off" aria-label="Word to look up" />
+        <button type="submit">Search</button>
+      </form>
+ 
+      <!-- aria-live makes screen readers announce new results and errors -->
+      <section id="results" aria-live="polite">
+        <div class="message">Search for a word to see its pronunciation, definitions and synonyms.</div>
+      </section>
+ 
+      <!-- Saved words list (highlighted using JS-controlled CSS class) -->
+      <section id="saved-section" class="card hidden" aria-label="Saved words">
+        <h2>Saved words</h2>
+        <ul id="saved-list"></ul>
+      </section>
+    </main>
+  </div>
+ 
+  <!-- External script: placed at the end of <body> so the DOM exists when it runs -->
+  <script src="script.js"></script>
+    
+</body>
+</html>
